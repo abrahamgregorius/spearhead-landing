@@ -96,14 +96,19 @@ export async function POST(request: NextRequest) {
       ? body.signup_source
       : "general";
 
-  /* persistence — Supabase REST (§8.3) */
+  /* persistence — Supabase REST (§8.3). The service_role key is preferred;
+     the public anon key also works when the table's RLS grants an
+     insert-only policy (see README "Waitlist database setup"). */
   const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
     console.warn(
-      "[waitlist] SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY are not configured. " +
-        "Submissions are rejected until the backend is connected — see README.",
+      "[waitlist] SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or " +
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY) are not configured. Submissions are " +
+        "rejected until the backend is connected — see README.",
     );
     return json({ error: "not_configured" }, 503);
   }

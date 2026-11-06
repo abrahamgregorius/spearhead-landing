@@ -24,12 +24,19 @@ create table if not exists public.waitlist (
   created_at timestamptz not null default now()
 );
 
--- No policies: Row Level Security blocks all anon access.
--- The API route uses the service role key (server-side only).
+-- Row Level Security: the public anon key may INSERT only.
+-- SELECT / UPDATE / DELETE stay blocked, so signup emails are never
+-- publicly readable. (A service_role key bypasses RLS either way.)
 alter table public.waitlist enable row level security;
+
+create policy "anon can join the waitlist"
+on public.waitlist
+for insert
+to anon
+with check (true);
 ```
 
-3. Copy `.env.example` to `.env.local` and fill in `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API).
+3. Copy `.env.example` to `.env.local` and fill in `SUPABASE_URL` plus **either** `NEXT_PUBLIC_SUPABASE_ANON_KEY` (public anon key — recommended, requires the insert-only policy above) **or** `SUPABASE_SERVICE_ROLE_KEY` (server-side secret, strongest). Both are found under Project Settings → API.
 4. Restart the dev server.
 
 Until configured, the API responds `503 not_configured` and the form shows an error state — submissions are never faked. The route also performs server-side email validation, honeypot + minimum-interaction-time spam protection, IP rate limiting (5 per 15 min), duplicate detection (`You're already on the list.`), and attribution capture (`use_case_source`, `signup_source`).
