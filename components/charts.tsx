@@ -191,12 +191,16 @@ export function Sparkline({
   width = 120,
   height = 36,
   fill = false,
+  className,
+  preserveAspectRatio,
 }: {
   values: number[];
   color?: string;
   width?: number;
   height?: number;
   fill?: boolean;
+  className?: string;
+  preserveAspectRatio?: string;
 }) {
   const lo = Math.min(...values);
   const hi = Math.max(...values);
@@ -216,6 +220,8 @@ export function Sparkline({
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio={preserveAspectRatio}
+      className={className}
       aria-hidden="true"
     >
       {fill && (
