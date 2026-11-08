@@ -305,7 +305,7 @@ export function StrategyDemo() {
       {/* conversation */}
       <div
         ref={scrollRef}
-        className="flex max-h-[440px] min-h-[380px] flex-col gap-4 overflow-y-auto p-3.5"
+        className="scroll-slim flex max-h-[440px] min-h-[380px] flex-col gap-4 overflow-y-auto p-3.5"
         aria-live="polite"
       >
         {messages.map((msg) =>
@@ -375,8 +375,8 @@ export function StrategyDemo() {
         )}
       </div>
 
-      {/* prompt suggestions */}
-      <div className="flex gap-1.5 overflow-x-auto border-t border-line px-3.5 pt-3 pb-2">
+      {/* prompt suggestions — wrap instead of scrolling horizontally */}
+      <div className="flex flex-wrap gap-1.5 border-t border-line px-3.5 pt-3 pb-2">
         {SUGGESTIONS.map((s) => (
           <button
             key={s.label}

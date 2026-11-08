@@ -133,18 +133,19 @@ export function UseCases() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10"
+                className="grid grid-cols-1 gap-y-8 md:grid-cols-[minmax(0,35fr)_minmax(0,65fr)] md:items-start md:gap-x-6 lg:gap-x-11"
               >
-                {/* explanation — first on mobile (§7.1) */}
-                <div className="flex flex-col justify-center lg:col-span-4">
+                {/* explanation — first on mobile (§7.1); top-aligned
+                    editorial group, offset 48px from the interface top */}
+                <div className="flex flex-col items-start md:pt-12">
                   <Chip>{tab.label}</Chip>
-                  <h3 className="mt-4 text-[24px] leading-[1.2] font-semibold tracking-[-0.01em] text-ink md:text-[28px]">
+                  <h3 className="mt-3 text-[24px] leading-[1.2] font-semibold tracking-[-0.01em] text-ink md:text-[28px]">
                     {tab.title}
                   </h3>
-                  <p className="mt-3 max-w-[380px] text-[14.5px] leading-[1.65] text-ink2">
+                  <p className="mt-3.5 max-w-[380px] text-[14.5px] leading-[1.65] text-ink2">
                     {tab.scenario}
                   </p>
-                  <ul className="mt-6 flex flex-col gap-2.5">
+                  <ul className="mt-6 flex flex-col gap-3">
                     {tab.points.map((point) => (
                       <li
                         key={point}
@@ -160,7 +161,7 @@ export function UseCases() {
                 </div>
 
                 {/* interface */}
-                <div className="min-w-0 lg:col-span-8">
+                <div className="min-w-0">
                   {active === "performance" && <PerformanceDemo />}
                   {active === "strategy" && <StrategyDemo />}
                   {active === "execution" && <ExecutionDemo />}

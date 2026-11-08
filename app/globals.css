@@ -79,6 +79,26 @@ body {
   background: rgba(163, 230, 53, 0.28);
 }
 
+/* Slim, theme-aware scrollbar for contained interactive areas —
+   replaces the default browser scrollbar inside interface previews
+   (more-than-insight refinement §4). */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-muted) transparent;
+}
+.scroll-slim::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--c-muted);
+  border-radius: 999px;
+}
+.scroll-slim::-webkit-scrollbar-track,
+.scroll-slim::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 :focus-visible {
   outline: 2px solid #a3e635;
   outline-offset: 2px;
